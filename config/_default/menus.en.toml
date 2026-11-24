@@ -1,0 +1,32 @@
+# -- Main Menu --
+# The main menu is displayed in the header at the top of the page.
+
+[[main]]
+  name = "About Us"
+  pageRef = "about-us"
+  weight = 10
+
+[[main]]
+  name = "Members"
+  pageRef = "members"
+  weight = 20
+
+[[main]]
+  name = "Activities"
+  pageRef = "activities"
+  weight = 30
+
+[[main]]
+  name = "Library"
+  pageRef = "library"
+  weight = 40
+
+[[main]]
+  name = "Gallery"
+  pageRef = "gallery"
+  weight = 50
+
+[[main]]
+  name = "Contact Us"
+  pageRef = "contact-us"
+  weight = 60

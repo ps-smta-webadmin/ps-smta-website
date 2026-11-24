@@ -1,0 +1,4 @@
+{{- with resources.Get "images/logos/125th-year-logo.png" -}}
+  {{- $resized := .Resize "360x" -}}
+  <img class="ta-announcement__logo" src="{{ $resized.RelPermalink }}" alt="125th Anniversary Logo">
+{{- end -}}

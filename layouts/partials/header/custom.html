@@ -1,0 +1,61 @@
+{{ $psLogo := resources.Get "images/logos/ps-logo.png" }}
+{{ $taLogo := resources.Get (site.Params.header.logo | default "images/logos/ta-emblem.png") }}
+
+<header class="ta-header">
+  <div class="ta-header__brand-row">
+    <a class="ta-header__brand" href="{{ .Site.Home.RelPermalink }}" aria-label="{{ site.Title }}">
+      <span class="ta-header__logos">
+        {{ with $psLogo }}
+          {{ $psThumb := .Resize "x120" }}
+          <img class="ta-header__logo" src="{{ $psThumb.RelPermalink }}" alt="Papal Seminary Emblem">
+        {{ end }}
+        {{ with $taLogo }}
+          {{ $taThumb := .Resize "x120" }}
+          <img class="ta-header__logo" src="{{ $taThumb.RelPermalink }}" alt="{{ site.Title }}">
+        {{ end }}
+      </span>
+      {{ if site.Params.header.showTitle | default true }}
+        <span class="ta-header__title-group">
+          <span class="ta-header__title">{{ site.Title }}</span>
+          <span class="ta-header__subtitle">
+            {{- if eq .Site.Language.Lang "ta" -}}
+              பாப்பிறை குருமடம், புனே
+            {{- else -}}
+              Papal Seminary, Pune
+            {{- end -}}
+          </span>
+        </span>
+      {{ end }}
+    </a>
+
+    <div class="ta-lang-switch" aria-label="Language switcher">
+      {{ if .IsTranslated }}
+        {{ range .Translations }}
+          <a class="ta-lang-btn" href="{{ .RelPermalink }}">
+            {{ if eq .Language.Lang "ta" }}தமிழ்{{ else }}English{{ end }}
+          </a>
+        {{ end }}
+      {{ else }}
+        {{ range .Sites }}
+          {{ if ne .Language.Lang $.Site.Language.Lang }}
+            <a class="ta-lang-btn" href="{{ .Home.RelPermalink }}">
+              {{ if eq .Language.Lang "ta" }}தமிழ்{{ else }}English{{ end }}
+            </a>
+          {{ end }}
+        {{ end }}
+      {{ end }}
+    </div>
+  </div>
+
+  {{ with site.Menus.main }}
+    <nav class="ta-header__nav" aria-label="Main navigation">
+      <ul class="ta-header__menu">
+        {{ range . }}
+          <li class="ta-header__menu-item">
+            <a class="ta-header__menu-link" href="{{ .URL }}">{{ .Name }}</a>
+          </li>
+        {{ end }}
+      </ul>
+    </nav>
+  {{ end }}
+</header>

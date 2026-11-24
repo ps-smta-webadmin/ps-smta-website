@@ -1,0 +1,16 @@
+{{- $images := .Page.Resources.ByType "image" -}}
+{{- $defaultCaption := cond (eq .Page.Language.Lang "ta") "தூய மரியன்னை தமிழ்க் கழக நினைவுகள்" "Memories of St. Mary’s Tamil Academy" -}}
+{{- $caption := .Get "caption" | default $defaultCaption -}}
+{{- if gt (len $images) 0 -}}
+<div class="ta-gallery-grid">
+  {{- range $images -}}
+    {{- $thumb := .Resize "400x" -}}
+    <figure class="ta-gallery-card">
+      <a class="ta-gallery-link" href="{{ .RelPermalink }}" target="_blank" rel="noopener">
+        <img class="ta-gallery-image" src="{{ $thumb.RelPermalink }}" alt="{{ .Title | default .Name }}" loading="lazy">
+      </a>
+      <figcaption class="ta-gallery-caption">{{ $caption }}</figcaption>
+    </figure>
+  {{- end -}}
+</div>
+{{- end -}}

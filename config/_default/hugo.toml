@@ -1,0 +1,6 @@
+# baseURL = "http://localhost:1313/"
+baseURL = "https://www.papalseminarytamilacademy.org.in/"
+
+defaultContentLanguage = "ta"
+defaultContentLanguageInSubdir = false
+enableRobotsTXT = true

@@ -1,0 +1,29 @@
+[[main]]
+  name = "தமிழ்க் கழகம்"
+  pageRef = "about-us"
+  weight = 10
+
+[[main]]
+  name = "உறுப்பினர்கள்"
+  pageRef = "members"
+  weight = 20
+
+[[main]]
+  name = "செயல்பாடுகள்"
+  pageRef = "activities"
+  weight = 30
+
+[[main]]
+  name = "நூலகம்"
+  pageRef = "library"
+  weight = 40
+
+[[main]]
+  name = "புகைப்படங்கள்"
+  pageRef = "gallery"
+  weight = 50
+
+[[main]]
+  name = "தொடர்புக்கு"
+  pageRef = "contact-us"
+  weight = 60
