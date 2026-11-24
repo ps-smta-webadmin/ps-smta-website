@@ -24,6 +24,11 @@ jobs:
         with:
           submodules: recursive
 
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+
       - name: Set up Hugo
         uses: peaceiris/actions-hugo@v3
         with:
@@ -35,8 +40,7 @@ jobs:
         uses: actions/configure-pages@v5
 
       - name: Build site
-        run: hugo --minify --baseURL "https://www.acpi.net.in/"
-      #  run: hugo --minify --baseURL "${{ steps.pages.outputs.base_url }}/"
+        run: hugo --minify --baseURL "https://www.papalseminarytamilacademy.org.in/"
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
