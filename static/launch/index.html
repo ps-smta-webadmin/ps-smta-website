@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>125th Anniversary Website Launch — St. Mary’s Tamil Academy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Tamil:wght@400;600;700;800&family=Noto+Serif:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --marian-dark: #0f213d;
+      --marian-blue: #1b365d;
+      --marian-light: #274b7f;
+      --gold: #d4af37;
+      --gold-bright: #f0cf65;
+      --white: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+      font-family: "Noto Sans Tamil", "Nirmala UI", "Latha", system-ui, sans-serif;
+      background: var(--marian-dark);
+      color: var(--white);
+      user-select: none;
+    }
+
+    /* Subtle campus aerial backdrop */
+    .backdrop {
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(circle at 50% 38%, rgba(39, 75, 127, 0.78) 0%, rgba(15, 33, 61, 0.96) 75%),
+        url("/images/home/papal-seminary-aerial.jpg") center / cover no-repeat;
+      z-index: 0;
+    }
+
+    /* Ceremonial gold framing border */
+    .frame {
+      position: fixed;
+      inset: 18px;
+      border: 1px solid rgba(212, 175, 55, 0.35);
+      border-radius: 12px;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    /* Parting curtain panels */
+    .curtain {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      width: 50%;
+      background: linear-gradient(135deg, #102442 0%, #1b365d 50%, #102442 100%);
+      z-index: 15;
+      pointer-events: none;
+      opacity: 0;
+      transition: transform 1.25s cubic-bezier(0.76, 0, 0.24, 1), opacity 0.35s ease;
+    }
+    .curtain.left {
+      left: 0;
+      border-right: 2px solid var(--gold);
+    }
+    .curtain.right {
+      right: 0;
+      border-left: 2px solid var(--gold);
+    }
+    body.launching .curtain {
+      opacity: 1;
+    }
+    body.parting .curtain.left {
+      transform: translateX(-102%);
+    }
+    body.parting .curtain.right {
+      transform: translateX(102%);
+    }
+
+    /* Main stage */
+    .stage {
+      position: relative;
+      z-index: 5;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+      gap: 1.15rem;
+      transition: opacity 0.45s ease, transform 0.45s ease;
+    }
+
+    body.launching .stage {
+      opacity: 0;
+      transform: scale(0.97);
+    }
+
+    .eyebrow {
+      font-size: clamp(0.85rem, 1.3vw, 1.05rem);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold-bright);
+      font-weight: 600;
+    }
+
+    .emblems-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.25rem;
+    }
+    .emblems-row:empty {
+      display: none;
+    }
+    .emblem-badge {
+      height: 54px;
+      width: auto;
+      background: rgba(255, 255, 255, 0.96);
+      padding: 5px 8px;
+      border-radius: 10px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Crisp white medallion so dark elements of 125th-year logo stay high-contrast */
+    .logo-medallion {
+      background: #ffffff;
+      border: 3px solid var(--gold);
+      border-radius: 22px;
+      padding: 14px 20px;
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.42), 0 0 0 6px rgba(212, 175, 55, 0.14);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .logo-medallion img {
+      display: block;
+      height: clamp(120px, 21vh, 190px);
+      width: auto;
+    }
+
+    .title-ta {
+      font-size: clamp(1.8rem, 3.8vw, 3.2rem);
+      font-weight: 800;
+      line-height: 1.28;
+      letter-spacing: 0.01em;
+      text-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+    }
+
+    .title-en {
+      font-family: "Noto Serif", Georgia, serif;
+      font-size: clamp(1.1rem, 2vw, 1.65rem);
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.92);
+    }
+
+    .motto {
+      font-size: clamp(0.95rem, 1.4vw, 1.15rem);
+      color: rgba(240, 207, 101, 0.92);
+      font-weight: 400;
+    }
+
+    .launch-btn {
+      margin-top: 0.8rem;
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-bright) 100%);
+      color: var(--marian-dark);
+      border: none;
+      border-radius: 999px;
+      padding: 1rem 2.5rem;
+      font-family: inherit;
+      font-size: clamp(1.05rem, 1.5vw, 1.25rem);
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.38), 0 0 0 0 rgba(240, 207, 101, 0.55);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      animation: pulseRing 2.6s infinite;
+    }
+    .launch-btn:hover,
+    .launch-btn:focus-visible {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.48);
+      outline: 3px solid var(--white);
+      outline-offset: 4px;
+    }
+
+    @keyframes pulseRing {
+      0% { box-shadow: 0 12px 30px rgba(0, 0, 0, 0.38), 0 0 0 0 rgba(240, 207, 101, 0.5); }
+      70% { box-shadow: 0 12px 30px rgba(0, 0, 0, 0.38), 0 0 0 18px rgba(240, 207, 101, 0); }
+      100% { box-shadow: 0 12px 30px rgba(0, 0, 0, 0.38), 0 0 0 0 rgba(240, 207, 101, 0); }
+    }
+
+    /* Countdown overlay during curtain reveal */
+    .countdown-layer {
+      position: fixed;
+      inset: 0;
+      z-index: 20;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    body.launching .countdown-layer {
+      opacity: 1;
+    }
+    body.parting .countdown-layer {
+      opacity: 0;
+    }
+
+    .countdown-num {
+      font-family: "Noto Serif", Georgia, serif;
+      font-size: clamp(5rem, 15vw, 10rem);
+      font-weight: 700;
+      color: var(--gold-bright);
+      text-shadow: 0 10px 40px rgba(0, 0, 0, 0.55);
+      line-height: 1;
+    }
+    .countdown-sub {
+      margin-top: 1rem;
+      font-size: clamp(1rem, 1.8vw, 1.4rem);
+      color: rgba(255, 255, 255, 0.9);
+      letter-spacing: 0.08em;
+    }
+
+    /* Fullscreen QR Code modal */
+    .qr-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 30;
+      background: radial-gradient(circle at 50% 45%, var(--marian-light) 0%, var(--marian-dark) 80%);
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+      gap: 1.25rem;
+    }
+    .qr-modal.open {
+      display: flex;
+    }
+    .qr-card {
+      background: #ffffff;
+      padding: 22px;
+      border-radius: 24px;
+      border: 4px solid var(--gold);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+    }
+    .qr-card img {
+      display: block;
+      width: min(360px, 52vh);
+      height: auto;
+    }
+    .qr-url {
+      font-size: clamp(1.2rem, 2.4vw, 2rem);
+      font-weight: 700;
+      color: var(--gold-bright);
+      letter-spacing: 0.02em;
+    }
+    .qr-prompt {
+      font-size: clamp(1rem, 1.6vw, 1.35rem);
+      color: rgba(255, 255, 255, 0.94);
+    }
+    .qr-close {
+      margin-top: 0.5rem;
+      background: transparent;
+      color: rgba(255, 255, 255, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      border-radius: 999px;
+      padding: 0.45rem 1.25rem;
+      font-family: inherit;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+    .qr-close:hover {
+      color: var(--white);
+      border-color: var(--white);
+    }
+
+    /* Discrete operator controls in bottom corners */
+    .operator-bar {
+      position: fixed;
+      bottom: 28px;
+      left: 34px;
+      right: 34px;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.38);
+    }
+    .qr-trigger {
+      background: rgba(255, 255, 255, 0.08);
+      color: rgba(255, 255, 255, 0.72);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      border-radius: 8px;
+      padding: 0.4rem 0.85rem;
+      font-family: inherit;
+      font-size: 0.82rem;
+      cursor: pointer;
+    }
+    .qr-trigger:hover {
+      background: rgba(255, 255, 255, 0.18);
+      color: var(--white);
+    }
+    body.launching .operator-bar {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="backdrop"></div>
+  <div class="frame"></div>
+  <div class="curtain left"></div>
+  <div class="curtain right"></div>
+
+  <main class="stage">
+    <div class="eyebrow">1901 – 2026 &nbsp;•&nbsp; 125-ஆம் ஆண்டு நிறைவு விழா &nbsp;•&nbsp; 125th Anniversary</div>
+
+    <div class="emblems-row">
+      <img class="emblem-badge" src="ps-logo.png" alt="Papal Seminary Emblem" onerror="this.remove()">
+      <img class="emblem-badge" src="ta-emblem.png" alt="Tamil Academy Emblem" onerror="this.remove()">
+    </div>
+
+    <div class="logo-medallion" id="logoWrap">
+      <img src="125th-year-logo.png" alt="125th Anniversary Logo" onerror="document.getElementById('logoWrap').remove()">
+    </div>
+
+    <h1 class="title-ta">தூய மரியன்னை தமிழ்க் கழகம்</h1>
+    <div class="title-en">St. Mary’s Tamil Academy &nbsp;•&nbsp; Papal Seminary, Pune</div>
+    <p class="motto">“அன்பிலும் அறிவிலும் வளர” &nbsp;—&nbsp; To Grow in Love and Wisdom</p>
+
+    <button id="launchBtn" class="launch-btn" type="button">
+      இணையதளத்தைத் தொடங்கிவைக்கவும் &nbsp;/&nbsp; Launch Website
+    </button>
+  </main>
+
+  <div class="countdown-layer" aria-live="polite">
+    <div id="countNum" class="countdown-num">3</div>
+    <div class="countdown-sub">www.papalseminarytamilacademy.org.in</div>
+  </div>
+
+  <section id="qrModal" class="qr-modal" role="dialog" aria-modal="true" aria-label="Website QR Code">
+    <div class="eyebrow">தூய மரியன்னை தமிழ்க் கழகம் &nbsp;•&nbsp; St. Mary’s Tamil Academy</div>
+    <div class="qr-card">
+      <img src="qr.png" alt="QR Code for www.papalseminarytamilacademy.org.in">
+    </div>
+    <div class="qr-url">www.papalseminarytamilacademy.org.in</div>
+    <div class="qr-prompt">உங்கள் அலைபேசியில் பார்வையிட ஸ்கேன் செய்யவும் &nbsp;•&nbsp; Scan to visit on your phone</div>
+    <button id="qrClose" class="qr-close" type="button">Close (Esc)</button>
+  </section>
+
+  <div class="operator-bar">
+    <span>F11: Fullscreen &nbsp;•&nbsp; Click / Space / Clicker: Launch &nbsp;•&nbsp; Q: QR Code</span>
+    <button id="qrTrigger" class="qr-trigger" type="button">Show QR Code (Q)</button>
+  </div>
+
+  <script>
+    const launchBtn = document.getElementById("launchBtn");
+    const countNum = document.getElementById("countNum");
+    const qrModal = document.getElementById("qrModal");
+    const qrTrigger = document.getElementById("qrTrigger");
+    const qrClose = document.getElementById("qrClose");
+
+    let isLaunching = false;
+
+    function openQR() {
+      qrModal.classList.add("open");
+    }
+
+    function closeQR() {
+      qrModal.classList.remove("open");
+    }
+
+    function startLaunch() {
+      if (isLaunching || qrModal.classList.contains("open")) return;
+      isLaunching = true;
+      document.body.classList.add("launching");
+
+      const steps = ["3", "2", "1"];
+      let idx = 0;
+      countNum.textContent = steps[idx];
+
+      const timer = setInterval(() => {
+        idx += 1;
+        if (idx < steps.length) {
+          countNum.textContent = steps[idx];
+        } else {
+          clearInterval(timer);
+          document.body.classList.add("parting");
+          setTimeout(() => {
+            window.location.href = "/";
+          }, 900);
+        }
+      }, 850);
+    }
+
+    launchBtn.addEventListener("click", startLaunch);
+    qrTrigger.addEventListener("click", openQR);
+    qrClose.addEventListener("click", closeQR);
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "q" || e.key === "Q") {
+        if (!isLaunching) {
+          qrModal.classList.contains("open") ? closeQR() : openQR();
+        }
+        return;
+      }
+      if (e.key === "Escape" && qrModal.classList.contains("open")) {
+        closeQR();
+        return;
+      }
+      if (e.key === " " || e.key === "Enter" || e.key === "ArrowRight") {
+        if (!qrModal.classList.contains("open")) {
+          e.preventDefault();
+          startLaunch();
+        }
+      }
+    });
+
+    // Open directly to fullscreen QR screen via /launch/?qr
+    if (new URLSearchParams(window.location.search).has("qr")) {
+      openQR();
+    }
+  </script>
+</body>
+</html>
