@@ -5,11 +5,20 @@
 <div class="ta-gallery-grid">
   {{- range $images -}}
     {{- $thumb := .Resize "400x" -}}
+    {{- $name := .Params.name -}}
+    {{- $tenure := .Params.tenure -}}
     <figure class="ta-gallery-card">
       <a class="ta-gallery-link" href="{{ .RelPermalink }}" target="_blank" rel="noopener">
-        <img class="ta-gallery-image" src="{{ $thumb.RelPermalink }}" alt="{{ .Title | default .Name }}" loading="lazy">
+        <img class="ta-gallery-image" src="{{ $thumb.RelPermalink }}" alt="{{ $name | default (.Title | default .Name) }}" loading="lazy">
       </a>
-      <figcaption class="ta-gallery-caption">{{ $caption }}</figcaption>
+      <figcaption class="ta-gallery-caption">
+        {{- if $name -}}
+          <strong>{{ $name }}</strong>
+          {{- with $tenure -}}<br><span>{{ . }}</span>{{- end -}}
+        {{- else -}}
+          {{ $caption }}
+        {{- end -}}
+      </figcaption>
     </figure>
   {{- end -}}
 </div>
